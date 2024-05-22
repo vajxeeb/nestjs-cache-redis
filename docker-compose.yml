@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+    test-redis-api:
+        build: .
+        image: test-redis-api:latest
+        restart: always
+        ports:
+            - "3000:3000"
+        container_name: test-redis-api
+
+        environment:
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+        depends_on:
+            - redis
+
+    redis:
+        image: redis:latest
+        container_name: redis
+        restart: always
+        ports:
+            - "6379:6379"

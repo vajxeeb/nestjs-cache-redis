@@ -7,9 +7,15 @@ import { CacheInterceptor, CacheTTL } from "@nestjs/cache-manager";
 export class StudentsController {
     constructor(private readonly studentsService: StudentsService) {}
 
-    @CacheTTL(60 * 1000)
+    //@CacheTTL(60 * 1000)
     @Get()
     async getStudents() {
         return this.studentsService.getStudents();
+    }
+
+    //@CacheTTL(60 * 1000)
+    @Get("from-db")
+    async getDataFromDb() {
+        return this.studentsService.getDataFromDb();
     }
 }

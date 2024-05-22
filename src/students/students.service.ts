@@ -1,9 +1,13 @@
 import { Injectable, Inject } from "@nestjs/common";
 import { Cache } from "cache-manager";
+import { Sequelize } from "sequelize-typescript";
 
 @Injectable()
 export class StudentsService {
-    constructor(@Inject("CACHE_MANAGER") private cacheManager: Cache) {}
+    constructor(
+        @Inject("CACHE_MANAGER") private cacheManager: Cache,
+        private readonly sequelize: Sequelize,
+    ) {}
 
     async getStudents() {
         // await this.cacheManager.set('key1', 'Hello');
@@ -17,6 +21,10 @@ export class StudentsService {
         const studentsData = await this.retrieveStudentFromDb();
         //await this.cacheManager.set("students", studentsData, 60 * 10000);
         return studentsData;
+    }
+    async getDataFromDb() {
+        const data = await this.sequelize.query("SELECT * FROM tb_member");
+        return data[0];
     }
     async retrieveStudentFromDb() {
         return new Promise((resolve) => {

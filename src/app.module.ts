@@ -6,6 +6,7 @@ import { StudentsModule } from "./students/students.module";
 import { redisStore } from "cache-manager-redis-yet";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import config from "./config";
+import { DatabaseModule } from "./database";
 
 @Module({
     imports: [
@@ -35,6 +36,7 @@ import config from "./config";
             inject: [ConfigService],
         }),
         StudentsModule,
+        DatabaseModule,
     ],
     controllers: [AppController],
     providers: [AppService],
